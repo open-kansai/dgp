@@ -1,0 +1,3 @@
+/target
+.auth_data
+Cargo.lock
