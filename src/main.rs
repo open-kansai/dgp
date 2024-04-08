@@ -1,4 +1,5 @@
 mod common;
+mod package;
 
 use std::io::{stdin, stdout, Write};
 
@@ -7,7 +8,8 @@ use common::{AuthData, DGPFunction};
 use regex::Regex;
 
 #[derive(Parser, Debug)]
-#[command(version = "0.1.0", about = "CLI For DGP", long_about = None)]
+#[command(version, about = "CLI For DGP", long_about = None)]
+#[command(propagate_version = true)]
 struct Args {
     #[command(subcommand)]
     command: Commands,
@@ -15,15 +17,32 @@ struct Args {
 
 #[derive(Debug, Subcommand)]
 enum Commands {
+    /// Show all available guilds
     ShowGuilds {},
+    /// Debug message with all information about specified guild
     ShowGuildDetail {
         /// Specify Guild id
         guild_id: u64,
     },
-    Copy {
+    /// Create a package and save it
+    CreatePack {
         /// Specify Guild id
         guild_id: u64,
+
+        /// Add/Remove guild name to package
+        #[arg(long)]
+        name: bool,
+
+        /// Add/Remove guild description to package
+        #[arg(long)]
+        description: bool,
+
+        /// Save everything available
+        /// And enable exclusion mode, if this mode is enabled, then all the flags that should indicate what needs to be saved will be used to exclude what does not need to be saved
+        #[arg(long, short)]
+        all: bool,
     },
+    /// Authorize use a bot token
     Auth {},
 }
 
@@ -58,7 +77,7 @@ async fn main() {
     let args = Args::parse();
 
     match args.command {
-        Commands::Copy { .. } => {}
+        Commands::CreatePack { .. } => {}
         Commands::ShowGuildDetail { guild_id } => {
             let auth_data = verify_auth().await;
             let dgp_function = DGPFunction::new(&auth_data);
