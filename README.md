@@ -6,7 +6,7 @@
 # Discord Guild Pack
 ![Logo](logo.png)
 
-A program to expand the capabilities of guild packaging in Discord. The standard functionality of Discord does not allow you to create a template for everything at once, and this is an excellent alternative for those who develop servers.
+A program to expand the capabilities of guild packaging in Discord. The standard functionality of Discord does not allow you to create a template for everything at once, and this is an excellent alternative for those who develop guilds in Discord.
 
 
 ## Todo
